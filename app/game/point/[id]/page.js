@@ -417,4 +417,28 @@ const styles = {
     borderRadius: "10px",
     textAlign: "center",
   },
+  
+   answerButtons: {
+    display: "flex",
+    gap: "12px",
+    marginTop: "10px",
+  },
+
+  answerButton: {
+    flex: 1,
+    padding: "16px",
+    border: "2px solid var(--color-khaki)",
+    borderRadius: "12px",
+    background: "white",
+    color: "var(--color-text)",
+    fontSize: "18px",
+    fontWeight: "bold",
+    cursor: "pointer",
+  },
+
+  answerButtonSelected: {
+    background: "var(--color-forest)",
+    color: "white",
+    borderColor: "var(--color-forest)",
+  },
 };
