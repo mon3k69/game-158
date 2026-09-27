@@ -51,32 +51,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "24px",
-        background: "#f5f5f5",
-      }}
-    >
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          width: "100%",
-          maxWidth: "420px",
-          background: "white",
-          padding: "32px",
-          borderRadius: "16px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h1>Dołącz do gry</h1>
+    <main style={styles.page}>
+      <form onSubmit={handleSubmit} style={styles.card}>
+        <p style={styles.eyebrow}>⚜️ NOWY ODKRYWCA</p>
+        <h1 style={styles.title}>Dołącz do gry</h1>
 
-        <p>Podaj pseudonim i utwórz swoje konto.</p>
+        <p style={styles.subtitle}>Podaj pseudonim i utwórz swoje konto.</p>
 
-        <label>Twój pseudonim</label>
+        <label style={styles.label}>Twój pseudonim</label>
         <input
           type="text"
           value={name}
@@ -86,7 +68,7 @@ export default function RegisterPage() {
           style={inputStyle}
         />
 
-        <label>Adres e-mail</label>
+        <label style={styles.label}>Adres e-mail</label>
         <input
           type="email"
           value={email}
@@ -96,7 +78,7 @@ export default function RegisterPage() {
           style={inputStyle}
         />
 
-        <label>Hasło</label>
+        <label style={styles.label}>Hasło</label>
         <input
           type="password"
           value={password}
@@ -106,7 +88,7 @@ export default function RegisterPage() {
           style={inputStyle}
         />
 
-        <label>Powtórz hasło</label>
+        <label style={styles.label}>Powtórz hasło</label>
         <input
           type="password"
           value={password2}
@@ -116,48 +98,92 @@ export default function RegisterPage() {
           style={inputStyle}
         />
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginTop: "8px",
-            border: "none",
-            borderRadius: "10px",
-            background: "#111",
-            color: "white",
-            fontSize: "16px",
-            cursor: "pointer",
-          }}
-        >
+        <button type="submit" disabled={loading} style={styles.button}>
           {loading ? "Tworzenie konta..." : "Zarejestruj się"}
         </button>
 
-        {message && (
-          <p
-            style={{
-              marginTop: "20px",
-              padding: "12px",
-              background: "#f0f0f0",
-              borderRadius: "8px",
-            }}
-          >
-            {message}
-          </p>
-        )}
+        {message && <p style={styles.message}>{message}</p>}
       </form>
     </main>
   );
 }
 
+const styles = {
+  page: {
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "24px",
+    background: "var(--color-cream)",
+  },
+
+  card: {
+    width: "100%",
+    maxWidth: "420px",
+    background: "var(--color-paper)",
+    padding: "32px",
+    borderRadius: "20px",
+    boxShadow: "var(--shadow-card-lg)",
+    border: "1px solid var(--color-khaki-light)",
+  },
+
+  eyebrow: {
+    margin: "0 0 4px",
+    fontSize: "12px",
+    letterSpacing: "2px",
+    fontWeight: "700",
+    color: "var(--color-forest)",
+  },
+
+  title: {
+    color: "var(--color-forest-dark)",
+  },
+
+  subtitle: {
+    color: "var(--color-text-muted)",
+    marginTop: "8px",
+  },
+
+  label: {
+    display: "block",
+    marginTop: "16px",
+    marginBottom: "6px",
+    fontWeight: "600",
+    color: "var(--color-text)",
+    fontSize: "14px",
+  },
+
+  button: {
+    width: "100%",
+    padding: "14px",
+    marginTop: "24px",
+    border: "none",
+    borderRadius: "12px",
+    background: "var(--color-orange)",
+    color: "white",
+    fontSize: "16px",
+    fontWeight: "700",
+    cursor: "pointer",
+    boxShadow: "0 6px 16px rgba(217,118,31,0.35)",
+  },
+
+  message: {
+    marginTop: "20px",
+    padding: "12px",
+    background: "var(--color-khaki-light)",
+    color: "var(--color-forest-dark)",
+    borderRadius: "10px",
+  },
+};
+
 const inputStyle = {
   width: "100%",
   padding: "12px",
-  marginTop: "6px",
-  marginBottom: "16px",
-  border: "1px solid #ccc",
-  borderRadius: "8px",
+  border: "1px solid var(--color-khaki)",
+  borderRadius: "10px",
   fontSize: "16px",
   boxSizing: "border-box",
+  background: "white",
+  color: "var(--color-text)",
 };

@@ -3,7 +3,9 @@ export default function Home() {
     <main style={styles.page}>
       <div style={styles.container}>
         <section style={styles.hero}>
-          <p style={styles.eyebrow}>GRA TERENOWA ZHP</p>
+          <div style={styles.heroGlow} />
+
+          <p style={styles.eyebrow}>⚜️ GRA TERENOWA ZHP</p>
 
           <h1 style={styles.heroTitle}>
             Wyrusz na przygodę i odkryj harcerski świat! 🏕️🔥
@@ -26,12 +28,16 @@ export default function Home() {
           </div>
         </section>
 
+        <div style={styles.trailDivider}>
+          <span>🧭</span>
+        </div>
+
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>Dla kogo jest ta gra?</h2>
 
           <div style={styles.grid3}>
             <div style={styles.infoCard}>
-              <div style={styles.infoEmoji}>🧒</div>
+              <div style={styles.badgeCircle}>🧒</div>
               <h3 style={styles.infoTitle}>Klasy 1–6</h3>
               <p style={styles.infoText}>
                 Gra jest dopasowana do najmłodszych — proste zasady
@@ -40,7 +46,7 @@ export default function Home() {
             </div>
 
             <div style={styles.infoCard}>
-              <div style={styles.infoEmoji}>🌱</div>
+              <div style={styles.badgeCircle}>🌱</div>
               <h3 style={styles.infoTitle}>Bez doświadczenia</h3>
               <p style={styles.infoText}>
                 Nie musisz być harcerzem ani nic wcześniej umieć.
@@ -49,7 +55,7 @@ export default function Home() {
             </div>
 
             <div style={styles.infoCard}>
-              <div style={styles.infoEmoji}>🧭</div>
+              <div style={styles.badgeCircle}>🧭</div>
               <h3 style={styles.infoTitle}>Przygoda i nowe umiejętności</h3>
               <p style={styles.infoText}>
                 Poznasz harcerskie triki, zagadki i zadania terenowe —
@@ -58,6 +64,10 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <div style={styles.trailDivider}>
+          <span>🌲</span>
+        </div>
 
         <section style={styles.section}>
           <h2 style={styles.sectionTitle}>Jak to działa?</h2>
@@ -100,6 +110,8 @@ export default function Home() {
         </section>
 
         <section style={styles.finalCta}>
+          <p style={styles.finalCtaEyebrow}>OGNISKO CZEKA 🔥</p>
+
           <h2 style={styles.finalCtaTitle}>
             Gotowi na przygodę?
           </h2>
@@ -108,7 +120,7 @@ export default function Home() {
             Załóż konto i sprawdź, dokąd zaprowadzi Cię gra!
           </p>
 
-          <a href="/register" style={styles.primaryButtonLight}>
+          <a href="/register" style={styles.primaryButtonDark}>
             Zarejestruj się
           </a>
         </section>
@@ -120,7 +132,7 @@ export default function Home() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "#f5f5f5",
+    background: "var(--color-cream)",
   },
 
   container: {
@@ -130,26 +142,45 @@ const styles = {
   },
 
   hero: {
-    background: "#111827",
+    position: "relative",
+    overflow: "hidden",
+    background:
+      "linear-gradient(160deg, var(--color-forest-dark) 0%, var(--color-forest) 100%)",
     color: "white",
     borderRadius: "24px",
     padding: "48px 32px",
     textAlign: "center",
-    marginBottom: "40px",
+    marginBottom: "8px",
+    border: "1px solid var(--color-forest)",
+  },
+
+  heroGlow: {
+    position: "absolute",
+    bottom: "-120px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "360px",
+    height: "240px",
+    background:
+      "radial-gradient(closest-side, rgba(217,118,31,0.35), transparent)",
+    pointerEvents: "none",
   },
 
   eyebrow: {
     margin: 0,
     fontSize: "13px",
     letterSpacing: "2px",
-    opacity: 0.7,
+    opacity: 0.85,
     fontWeight: "700",
+    color: "var(--color-khaki-light)",
+    position: "relative",
   },
 
   heroTitle: {
-    margin: "12px 0 16px",
+    margin: "14px 0 16px",
     fontSize: "34px",
     lineHeight: 1.25,
+    position: "relative",
   },
 
   heroSubtitle: {
@@ -157,7 +188,8 @@ const styles = {
     maxWidth: "560px",
     fontSize: "17px",
     lineHeight: 1.6,
-    opacity: 0.9,
+    opacity: 0.92,
+    position: "relative",
   },
 
   ctaRow: {
@@ -166,34 +198,57 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     gap: "14px",
+    position: "relative",
   },
 
   primaryButton: {
     display: "inline-block",
     padding: "16px 28px",
     borderRadius: "12px",
-    background: "white",
-    color: "#111827",
+    background: "var(--color-orange)",
+    color: "white",
     textDecoration: "none",
     fontWeight: "700",
     fontSize: "16px",
+    boxShadow: "0 6px 18px rgba(217,118,31,0.4)",
+  },
+
+  primaryButtonDark: {
+    display: "inline-block",
+    padding: "14px 26px",
+    borderRadius: "12px",
+    background: "var(--color-orange)",
+    color: "white",
+    textDecoration: "none",
+    fontWeight: "700",
+    fontSize: "16px",
+    boxShadow: "0 6px 18px rgba(217,118,31,0.35)",
   },
 
   secondaryLink: {
     color: "white",
-    opacity: 0.75,
+    opacity: 0.8,
     textDecoration: "underline",
     fontSize: "14px",
   },
 
+  trailDivider: {
+    textAlign: "center",
+    margin: "8px 0 24px",
+    borderTop: "2px dashed var(--color-khaki)",
+    position: "relative",
+    height: "1px",
+  },
+
   section: {
-    marginBottom: "40px",
+    marginBottom: "16px",
   },
 
   sectionTitle: {
     textAlign: "center",
     fontSize: "24px",
     marginBottom: "24px",
+    color: "var(--color-forest-dark)",
   },
 
   grid3: {
@@ -203,26 +258,34 @@ const styles = {
   },
 
   infoCard: {
-    background: "white",
+    background: "var(--color-paper)",
     borderRadius: "18px",
     padding: "24px",
     textAlign: "center",
-    boxShadow: "0 3px 15px rgba(0,0,0,0.06)",
+    boxShadow: "var(--shadow-card)",
+    border: "1px solid var(--color-khaki-light)",
   },
 
-  infoEmoji: {
-    fontSize: "34px",
-    marginBottom: "10px",
+  badgeCircle: {
+    width: "56px",
+    height: "56px",
+    lineHeight: "56px",
+    margin: "0 auto 12px",
+    borderRadius: "50%",
+    background: "var(--color-khaki-light)",
+    border: "2px dashed var(--color-khaki)",
+    fontSize: "26px",
   },
 
   infoTitle: {
     margin: "0 0 8px",
     fontSize: "18px",
+    color: "var(--color-forest-dark)",
   },
 
   infoText: {
     margin: 0,
-    color: "#555",
+    color: "var(--color-text-muted)",
     fontSize: "14px",
     lineHeight: 1.5,
   },
@@ -237,17 +300,18 @@ const styles = {
     display: "flex",
     gap: "18px",
     alignItems: "flex-start",
-    background: "white",
+    background: "var(--color-paper)",
     borderRadius: "18px",
     padding: "22px",
-    boxShadow: "0 3px 15px rgba(0,0,0,0.06)",
+    boxShadow: "var(--shadow-card)",
+    border: "1px solid var(--color-khaki-light)",
   },
 
   stepNumber: {
     minWidth: "38px",
     height: "38px",
     borderRadius: "50%",
-    background: "#111827",
+    background: "var(--color-forest)",
     color: "white",
     display: "flex",
     alignItems: "center",
@@ -260,41 +324,42 @@ const styles = {
   stepTitle: {
     margin: "0 0 6px",
     fontSize: "17px",
+    color: "var(--color-forest-dark)",
   },
 
   stepText: {
     margin: 0,
-    color: "#555",
+    color: "var(--color-text-muted)",
     fontSize: "14px",
     lineHeight: 1.5,
   },
 
   finalCta: {
     textAlign: "center",
-    background: "#dcfce7",
+    background:
+      "linear-gradient(160deg, var(--color-forest) 0%, var(--color-forest-dark) 100%)",
     borderRadius: "20px",
-    padding: "36px 24px",
+    padding: "40px 24px",
+    marginTop: "24px",
+    border: "1px solid var(--color-forest)",
+  },
+
+  finalCtaEyebrow: {
+    margin: "0 0 10px",
+    fontSize: "13px",
+    letterSpacing: "2px",
+    fontWeight: "700",
+    color: "var(--color-orange-light)",
   },
 
   finalCtaTitle: {
     margin: "0 0 10px",
     fontSize: "24px",
-    color: "#166534",
+    color: "white",
   },
 
   finalCtaText: {
     margin: "0 0 20px",
-    color: "#166534",
-  },
-
-  primaryButtonLight: {
-    display: "inline-block",
-    padding: "14px 26px",
-    borderRadius: "12px",
-    background: "#166534",
-    color: "white",
-    textDecoration: "none",
-    fontWeight: "700",
-    fontSize: "16px",
+    color: "var(--color-khaki-light)",
   },
 };

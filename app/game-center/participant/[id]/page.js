@@ -302,7 +302,7 @@ export default function ParticipantDetailsPage() {
 const styles = {
     page: {
         minHeight: "100vh",
-        background: "#f3f4f6",
+        background: "var(--color-cream)",
         padding: "24px 16px",
     },
 
@@ -318,10 +318,13 @@ const styles = {
         padding: "8px 0",
         marginBottom: "15px",
         fontSize: "15px",
+        color: "var(--color-forest)",
+        fontWeight: "700",
     },
 
     header: {
-        background: "#111827",
+        background:
+            "linear-gradient(160deg, var(--color-forest-dark) 0%, var(--color-forest) 100%)",
         color: "white",
         padding: "28px",
         borderRadius: "20px",
@@ -330,13 +333,15 @@ const styles = {
         justifyContent: "space-between",
         alignItems: "center",
         gap: "20px",
+        border: "1px solid var(--color-forest)",
     },
 
     label: {
         fontSize: "11px",
         letterSpacing: "2px",
-        opacity: 0.6,
+        opacity: 0.7,
         marginBottom: "8px",
+        color: "var(--color-khaki-light)",
     },
 
     title: {
@@ -346,7 +351,7 @@ const styles = {
 
     email: {
         margin: "6px 0 0",
-        opacity: 0.7,
+        opacity: 0.75,
     },
 
     bigProgress: {
@@ -357,29 +362,31 @@ const styles = {
     },
 
     card: {
-        background: "white",
+        background: "var(--color-paper)",
         borderRadius: "18px",
         padding: "24px",
         marginBottom: "16px",
-        boxShadow: "0 3px 15px rgba(0,0,0,0.05)",
+        boxShadow: "var(--shadow-card)",
+        border: "1px solid var(--color-khaki-light)",
     },
 
     progressHeader: {
         display: "flex",
         justifyContent: "space-between",
         marginBottom: "8px",
+        color: "var(--color-text)",
     },
 
     progressBar: {
         height: "10px",
-        background: "#e5e7eb",
+        background: "var(--color-khaki-light)",
         borderRadius: "999px",
         overflow: "hidden",
     },
 
     progressFill: {
         height: "100%",
-        background: "#111827",
+        background: "var(--color-orange)",
         borderRadius: "999px",
     },
 
@@ -390,13 +397,13 @@ const styles = {
     },
 
     point: {
-        border: "1px solid #e5e7eb",
+        border: "1px solid var(--color-khaki-light)",
         borderRadius: "14px",
         padding: "18px",
     },
 
     pointCompleted: {
-        borderColor: "#bbf7d0",
+        borderColor: "var(--color-khaki)",
     },
 
     pointTop: {
@@ -416,7 +423,7 @@ const styles = {
         width: "28px",
         height: "28px",
         borderRadius: "50%",
-        background: "#111827",
+        background: "var(--color-forest)",
         color: "white",
         display: "flex",
         alignItems: "center",
@@ -427,14 +434,14 @@ const styles = {
     },
 
     pointDescription: {
-        color: "#6b7280",
+        color: "var(--color-text-muted)",
         fontSize: "13px",
         marginTop: "4px",
     },
 
     completedBadge: {
-        background: "#dcfce7",
-        color: "#166534",
+        background: "var(--color-khaki-light)",
+        color: "var(--color-forest-dark)",
         padding: "6px 10px",
         borderRadius: "999px",
         fontSize: "12px",
@@ -442,8 +449,8 @@ const styles = {
     },
 
     pendingBadge: {
-        background: "#f3f4f6",
-        color: "#6b7280",
+        background: "var(--color-cream)",
+        color: "var(--color-text-muted)",
         padding: "6px 10px",
         borderRadius: "999px",
         fontSize: "12px",
@@ -453,21 +460,15 @@ const styles = {
     submission: {
         marginTop: "16px",
         paddingTop: "16px",
-        borderTop: "1px solid #eee",
+        borderTop: "1px dashed var(--color-khaki-light)",
     },
 
     answer: {
-        background: "#f9fafb",
+        background: "var(--color-cream)",
         padding: "12px",
         borderRadius: "10px",
         marginBottom: "10px",
-    },
-
-    answer: {
-        background: "#f9fafb",
-        padding: "12px",
-        borderRadius: "10px",
-        marginBottom: "10px",
+        color: "var(--color-text)",
     },
 
     photoInfo: {
@@ -475,7 +476,7 @@ const styles = {
     },
 
     date: {
-        color: "#9ca3af",
+        color: "var(--color-text-faint)",
         fontSize: "12px",
     },
 
@@ -488,7 +489,7 @@ const styles = {
         padding: "12px 18px",
         border: "none",
         borderRadius: "10px",
-        background: "#111827",
+        background: "var(--color-forest)",
         color: "white",
         cursor: "pointer",
     },
@@ -504,18 +505,18 @@ const styles = {
         objectFit: "contain",
         marginTop: "8px",
         borderRadius: "12px",
-        border: "1px solid #e5e7eb",
+        border: "1px solid var(--color-khaki-light)",
     },
 
     photoLoading: {
         marginTop: "12px",
-        color: "#6b7280",
+        color: "var(--color-text-muted)",
         fontSize: "13px",
     },
 
     photoError: {
         marginTop: "12px",
-        color: "#b91c1c",
+        color: "var(--color-ember)",
         fontSize: "13px",
     },
 };

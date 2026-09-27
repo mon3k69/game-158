@@ -348,7 +348,7 @@ function formatDate(date) {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "#f3f4f6",
+    background: "var(--color-cream)",
     padding: "24px 16px",
   },
 
@@ -358,7 +358,8 @@ const styles = {
   },
 
   header: {
-    background: "#111827",
+    background:
+      "linear-gradient(160deg, var(--color-forest-dark) 0%, var(--color-forest) 100%)",
     color: "white",
     padding: "28px",
     borderRadius: "20px",
@@ -367,13 +368,15 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     gap: "20px",
+    border: "1px solid var(--color-forest)",
   },
 
   label: {
     fontSize: "12px",
     letterSpacing: "2px",
-    opacity: 0.6,
+    opacity: 0.7,
     marginBottom: "8px",
+    color: "var(--color-khaki-light)",
   },
 
   title: {
@@ -383,17 +386,18 @@ const styles = {
 
   subtitle: {
     margin: "8px 0 0",
-    opacity: 0.75,
+    opacity: 0.8,
   },
 
   refreshButton: {
-    background: "white",
-    color: "#111827",
+    background: "var(--color-orange)",
+    color: "white",
     border: "none",
     borderRadius: "10px",
     padding: "11px 16px",
     cursor: "pointer",
     whiteSpace: "nowrap",
+    fontWeight: "700",
   },
 
   stats: {
@@ -404,28 +408,31 @@ const styles = {
   },
 
   statCard: {
-    background: "white",
+    background: "var(--color-paper)",
     borderRadius: "16px",
     padding: "22px",
     textAlign: "center",
+    border: "1px solid var(--color-khaki-light)",
   },
 
   statNumber: {
     fontSize: "32px",
     fontWeight: "700",
+    color: "var(--color-forest-dark)",
   },
 
   statLabel: {
     marginTop: "4px",
-    color: "#6b7280",
+    color: "var(--color-text-muted)",
     fontSize: "14px",
   },
 
   card: {
-    background: "white",
+    background: "var(--color-paper)",
     borderRadius: "18px",
     padding: "24px",
-    boxShadow: "0 3px 15px rgba(0,0,0,0.05)",
+    boxShadow: "var(--shadow-card)",
+    border: "1px solid var(--color-khaki-light)",
   },
 
   sectionHeader: {
@@ -434,11 +441,12 @@ const styles = {
 
   sectionTitle: {
     margin: 0,
+    color: "var(--color-forest-dark)",
   },
 
   sectionDescription: {
     margin: "5px 0 0",
-    color: "#6b7280",
+    color: "var(--color-text-muted)",
   },
 
   table: {
@@ -452,7 +460,7 @@ const styles = {
     gap: "20px",
     alignItems: "center",
     padding: "16px 0",
-    borderBottom: "1px solid #eee",
+    borderBottom: "1px dashed var(--color-khaki-light)",
   },
 
   participantInfo: {
@@ -462,7 +470,7 @@ const styles = {
   },
 
   email: {
-    color: "#6b7280",
+    color: "var(--color-text-muted)",
     fontSize: "13px",
   },
 
@@ -475,18 +483,19 @@ const styles = {
   progressText: {
     fontSize: "13px",
     fontWeight: "600",
+    color: "var(--color-text)",
   },
 
   progressBar: {
     height: "8px",
-    background: "#e5e7eb",
+    background: "var(--color-khaki-light)",
     borderRadius: "999px",
     overflow: "hidden",
   },
 
   progressFill: {
     height: "100%",
-    background: "#111827",
+    background: "var(--color-orange)",
     borderRadius: "999px",
   },
 
@@ -500,29 +509,29 @@ const styles = {
   },
 
   statusCompleted: {
-    background: "#dcfce7",
-    color: "#166534",
+    background: "var(--color-khaki-light)",
+    color: "var(--color-forest-dark)",
   },
 
   statusProgress: {
-    background: "#fef3c7",
-    color: "#92400e",
+    background: "var(--color-orange-light)",
+    color: "var(--color-orange-dark)",
   },
 
   statusNotStarted: {
-    background: "#f3f4f6",
-    color: "#4b5563",
+    background: "var(--color-cream)",
+    color: "var(--color-text-muted)",
   },
 
   activity: {
-    color: "#6b7280",
+    color: "var(--color-text-muted)",
     fontSize: "13px",
   },
 
   empty: {
     padding: "30px",
     textAlign: "center",
-    color: "#6b7280",
+    color: "var(--color-text-muted)",
   },
 
   loading: {
@@ -534,13 +543,14 @@ const styles = {
     padding: "12px 18px",
     border: "none",
     borderRadius: "10px",
-    background: "#111827",
+    background: "var(--color-forest)",
     color: "white",
     cursor: "pointer",
   },
-    detailsButton: {
+
+  detailsButton: {
     border: "none",
-    background: "#111827",
+    background: "var(--color-forest)",
     color: "white",
     padding: "8px 12px",
     borderRadius: "8px",

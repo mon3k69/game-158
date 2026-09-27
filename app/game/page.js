@@ -207,7 +207,7 @@ export default function GamePage() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "#f3f4f6",
+    background: "var(--color-cream)",
     padding: "30px 16px",
   },
 
@@ -219,25 +219,30 @@ const styles = {
   card: {
     maxWidth: "500px",
     margin: "100px auto",
-    background: "white",
+    background: "var(--color-paper)",
     padding: "30px",
     borderRadius: "18px",
     textAlign: "center",
+    border: "1px solid var(--color-khaki-light)",
   },
 
   header: {
-    background: "#111827",
+    background:
+      "linear-gradient(160deg, var(--color-forest-dark) 0%, var(--color-forest) 100%)",
     color: "white",
     padding: "28px",
     borderRadius: "20px",
     marginBottom: "20px",
+    border: "1px solid var(--color-forest)",
   },
 
   small: {
     margin: 0,
     fontSize: "12px",
-    opacity: 0.7,
-    letterSpacing: "1px",
+    opacity: 0.75,
+    letterSpacing: "1.5px",
+    color: "var(--color-khaki-light)",
+    fontWeight: "700",
   },
 
   title: {
@@ -260,7 +265,7 @@ const styles = {
 
   progress: {
     height: "100%",
-    background: "white",
+    background: "var(--color-orange)",
     borderRadius: "999px",
     transition: "width 0.3s ease",
   },
@@ -268,32 +273,36 @@ const styles = {
   pointCard: {
     display: "flex",
     gap: "18px",
-    background: "white",
+    background: "var(--color-paper)",
     padding: "20px",
     marginBottom: "16px",
     borderRadius: "18px",
-    boxShadow: "0 3px 15px rgba(0,0,0,0.06)",
+    boxShadow: "var(--shadow-card)",
+    border: "1px solid var(--color-khaki-light)",
   },
 
   completedCard: {
-    opacity: 0.8,
+    opacity: 0.85,
+    borderColor: "var(--color-khaki)",
   },
 
   number: {
     minWidth: "42px",
     height: "42px",
     borderRadius: "50%",
-    background: "#111827",
+    background: "var(--color-forest)",
     color: "white",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     fontWeight: "bold",
     fontSize: "18px",
+    border: "2px dashed var(--color-khaki)",
   },
 
   completedNumber: {
-    background: "#16a34a",
+    background: "var(--color-orange)",
+    border: "2px solid var(--color-orange-light)",
   },
 
   pointContent: {
@@ -304,18 +313,20 @@ const styles = {
     marginTop: 0,
     marginBottom: "8px",
     fontSize: "21px",
+    color: "var(--color-forest-dark)",
   },
 
   description: {
-    color: "#555",
+    color: "var(--color-text-muted)",
   },
 
   taskBox: {
-    background: "#f3f4f6",
+    background: "var(--color-khaki-light)",
     padding: "14px",
     borderRadius: "12px",
     marginTop: "14px",
     lineHeight: 1.5,
+    color: "var(--color-text)",
   },
 
   requirements: {
@@ -326,10 +337,12 @@ const styles = {
   },
 
   badge: {
-    background: "#e5e7eb",
+    background: "var(--color-khaki-light)",
+    border: "1px solid var(--color-khaki)",
     padding: "6px 10px",
     borderRadius: "999px",
     fontSize: "13px",
+    color: "var(--color-text)",
   },
 
   button: {
@@ -338,17 +351,18 @@ const styles = {
     padding: "12px",
     border: "none",
     borderRadius: "10px",
-    background: "#111827",
+    background: "var(--color-orange)",
     color: "white",
     fontSize: "15px",
+    fontWeight: "700",
     cursor: "pointer",
   },
 
   completedText: {
     marginTop: "16px",
     padding: "12px",
-    background: "#dcfce7",
-    color: "#166534",
+    background: "var(--color-khaki-light)",
+    color: "var(--color-forest-dark)",
     borderRadius: "10px",
     textAlign: "center",
     fontWeight: "bold",
@@ -357,11 +371,13 @@ const styles = {
   finish: {
     marginTop: "20px",
     padding: "20px",
-    background: "#dcfce7",
-    color: "#166534",
+    background:
+      "linear-gradient(160deg, var(--color-forest) 0%, var(--color-forest-dark) 100%)",
+    color: "white",
     borderRadius: "16px",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: "18px",
+    border: "1px solid var(--color-forest)",
   },
 };

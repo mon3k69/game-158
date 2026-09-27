@@ -1,0 +1,52 @@
+:root {
+  --color-forest-dark: #1f3625;
+  --color-forest: #2f4d34;
+  --color-forest-light: #5c7d5f;
+  --color-khaki: #cdbb87;
+  --color-khaki-light: #e9dfc2;
+  --color-cream: #f5f0e1;
+  --color-paper: #faf7ee;
+  --color-white: #ffffff;
+  --color-orange: #d9761f;
+  --color-orange-dark: #b35d16;
+  --color-orange-light: #f3ddb4;
+  --color-ember: #c1440e;
+  --color-text: #24301e;
+  --color-text-muted: #5f6b52;
+  --color-text-faint: #8a9178;
+  --shadow-card: 0 3px 16px rgba(31, 54, 37, 0.12);
+  --shadow-card-lg: 0 6px 24px rgba(31, 54, 37, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-text);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading), var(--font-body), system-ui, sans-serif;
+  margin: 0;
+}
+
+a {
+  font-family: inherit;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}

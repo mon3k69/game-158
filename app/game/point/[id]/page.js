@@ -281,17 +281,18 @@ export default function PointPage() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "#f3f4f6",
+    background: "var(--color-cream)",
     padding: "30px 16px",
   },
 
   card: {
     maxWidth: "600px",
     margin: "0 auto",
-    background: "white",
+    background: "var(--color-paper)",
     padding: "28px",
     borderRadius: "20px",
-    boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
+    boxShadow: "var(--shadow-card-lg)",
+    border: "1px solid var(--color-khaki-light)",
   },
 
   backButton: {
@@ -301,11 +302,13 @@ const styles = {
     marginBottom: "25px",
     cursor: "pointer",
     fontSize: "15px",
+    color: "var(--color-forest)",
+    fontWeight: "700",
   },
 
   number: {
     display: "inline-block",
-    background: "#111827",
+    background: "var(--color-forest)",
     color: "white",
     padding: "7px 12px",
     borderRadius: "999px",
@@ -315,33 +318,37 @@ const styles = {
   },
 
   description: {
-    color: "#555",
+    color: "var(--color-text-muted)",
     fontSize: "17px",
     lineHeight: 1.5,
   },
 
   task: {
-    background: "#f3f4f6",
+    background: "var(--color-khaki-light)",
     padding: "18px",
     borderRadius: "14px",
     margin: "24px 0",
     lineHeight: 1.5,
+    color: "var(--color-text)",
   },
 
   label: {
     display: "block",
     fontWeight: "bold",
     marginBottom: "8px",
+    color: "var(--color-text)",
   },
 
   textarea: {
     width: "100%",
     boxSizing: "border-box",
     padding: "12px",
-    border: "1px solid #ccc",
+    border: "1px solid var(--color-khaki)",
     borderRadius: "10px",
     fontSize: "16px",
     resize: "vertical",
+    background: "white",
+    color: "var(--color-text)",
   },
 
   photoSection: {
@@ -351,14 +358,15 @@ const styles = {
   fileInput: {
     width: "100%",
     padding: "12px",
-    border: "1px solid #ccc",
+    border: "1px solid var(--color-khaki)",
     borderRadius: "10px",
     boxSizing: "border-box",
+    background: "white",
   },
 
   photoSelected: {
     marginTop: "10px",
-    color: "#555",
+    color: "var(--color-text-muted)",
   },
 
   submitButton: {
@@ -367,17 +375,19 @@ const styles = {
     padding: "14px",
     border: "none",
     borderRadius: "10px",
-    background: "#111827",
+    background: "var(--color-orange)",
     color: "white",
     fontSize: "16px",
     fontWeight: "bold",
     cursor: "pointer",
+    boxShadow: "0 6px 16px rgba(217,118,31,0.35)",
   },
 
   message: {
     marginTop: "18px",
     padding: "12px",
-    background: "#f0f0f0",
+    background: "var(--color-khaki-light)",
+    color: "var(--color-forest-dark)",
     borderRadius: "10px",
     textAlign: "center",
   },
