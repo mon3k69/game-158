@@ -187,7 +187,6 @@ export default function PointPage() {
             <input
               type="file"
               accept="image/*"
-              capture="environment"
               onChange={(e) => setPhoto(e.target.files?.[0] || null)}
               style={styles.fileInput}
             />
