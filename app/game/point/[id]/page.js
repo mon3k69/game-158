@@ -1,0 +1,280 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { supabase } from "../../../../lib/supabase";
+
+export default function PointPage() {
+  const { id } = useParams();
+  const router = useRouter();
+
+  const [point, setPoint] = useState(null);
+  const [patrol, setPatrol] = useState(null);
+  const [answer, setAnswer] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    async function loadPoint() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        router.push("/login");
+        return;
+      }
+
+      const { data: patrolData, error: patrolError } = await supabase
+        .from("patrols")
+        .select("id, name")
+        .eq("user_id", user.id)
+        .single();
+
+      if (patrolError) {
+        console.error(patrolError);
+        setMessage("Nie udało się pobrać danych patrolu.");
+        setLoading(false);
+        return;
+      }
+
+      const { data: pointData, error: pointError } = await supabase
+        .from("points")
+        .select(
+          "id, name, description, task, requires_photo, requires_answer"
+        )
+        .eq("id", id)
+        .eq("active", true)
+        .single();
+
+      if (pointError) {
+        console.error(pointError);
+        setMessage("Nie znaleziono tego punktu.");
+        setLoading(false);
+        return;
+      }
+
+      setPatrol(patrolData);
+      setPoint(pointData);
+      setLoading(false);
+    }
+
+    if (id) {
+      loadPoint();
+    }
+  }, [id, router]);
+
+  async function submitPoint() {
+    setMessage("");
+
+    if (point.requires_answer && !answer.trim()) {
+      setMessage("Wpisz odpowiedź przed wysłaniem.");
+      return;
+    }
+
+    setSending(true);
+
+    const { error } = await supabase.from("submissions").insert({
+      patrol_id: patrol.id,
+      point_id: point.id,
+      answer: answer.trim() || null,
+    });
+
+    setSending(false);
+
+    if (error) {
+      console.error(error);
+      setMessage("Nie udało się zapisać odpowiedzi.");
+      return;
+    }
+
+    setMessage("Punkt został zaliczony! 🎉");
+
+    setTimeout(() => {
+      router.push("/game");
+    }, 1200);
+  }
+
+  if (loading) {
+    return (
+      <main style={styles.page}>
+        <div style={styles.card}>
+          <p>Ładowanie punktu...</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (!point) {
+    return (
+      <main style={styles.page}>
+        <div style={styles.card}>
+          <h1>Ups!</h1>
+          <p>{message || "Nie znaleziono punktu."}</p>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main style={styles.page}>
+      <div style={styles.card}>
+        <button
+          onClick={() => router.push("/game")}
+          style={styles.backButton}
+        >
+          ← Wróć do gry
+        </button>
+
+        <div style={styles.number}>PUNKT {point.id}</div>
+
+        <h1>{point.name}</h1>
+
+        <p style={styles.description}>{point.description}</p>
+
+        <div style={styles.task}>
+          <strong>Twoje zadanie:</strong>
+          <p>{point.task}</p>
+        </div>
+
+        {point.requires_answer && (
+          <div>
+            <label style={styles.label}>
+              Twoja odpowiedź
+            </label>
+
+            <textarea
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              placeholder="Wpisz tutaj odpowiedź..."
+              rows={5}
+              style={styles.textarea}
+            />
+          </div>
+        )}
+
+        {point.requires_photo && (
+          <div style={styles.photoBox}>
+            <div style={{ fontSize: "40px" }}>📷</div>
+            <strong>Tu dodamy zdjęcie</strong>
+            <p>
+              Formularz zdjęcia zrobimy w następnym kroku.
+            </p>
+          </div>
+        )}
+
+        <button
+          onClick={submitPoint}
+          disabled={sending}
+          style={styles.submitButton}
+        >
+          {sending ? "Zapisywanie..." : "Zalicz punkt ✅"}
+        </button>
+
+        {message && (
+          <div style={styles.message}>
+            {message}
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    background: "#f3f4f6",
+    padding: "30px 16px",
+  },
+
+  card: {
+    maxWidth: "600px",
+    margin: "0 auto",
+    background: "white",
+    padding: "28px",
+    borderRadius: "20px",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
+  },
+
+  backButton: {
+    border: "none",
+    background: "transparent",
+    padding: 0,
+    marginBottom: "25px",
+    cursor: "pointer",
+    fontSize: "15px",
+  },
+
+  number: {
+    display: "inline-block",
+    background: "#111827",
+    color: "white",
+    padding: "7px 12px",
+    borderRadius: "999px",
+    fontSize: "12px",
+    fontWeight: "bold",
+    letterSpacing: "1px",
+  },
+
+  description: {
+    color: "#555",
+    fontSize: "17px",
+    lineHeight: 1.5,
+  },
+
+  task: {
+    background: "#f3f4f6",
+    padding: "18px",
+    borderRadius: "14px",
+    margin: "24px 0",
+    lineHeight: 1.5,
+  },
+
+  label: {
+    display: "block",
+    fontWeight: "bold",
+    marginBottom: "8px",
+  },
+
+  textarea: {
+    width: "100%",
+    boxSizing: "border-box",
+    padding: "12px",
+    border: "1px solid #ccc",
+    borderRadius: "10px",
+    fontSize: "16px",
+    resize: "vertical",
+  },
+
+  photoBox: {
+    marginTop: "20px",
+    padding: "25px",
+    textAlign: "center",
+    background: "#f9fafb",
+    border: "2px dashed #ccc",
+    borderRadius: "14px",
+  },
+
+  submitButton: {
+    width: "100%",
+    marginTop: "24px",
+    padding: "14px",
+    border: "none",
+    borderRadius: "10px",
+    background: "#111827",
+    color: "white",
+    fontSize: "16px",
+    fontWeight: "bold",
+    cursor: "pointer",
+  },
+
+  message: {
+    marginTop: "18px",
+    padding: "12px",
+    background: "#f0f0f0",
+    borderRadius: "10px",
+    textAlign: "center",
+  },
+};

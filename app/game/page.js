@@ -118,10 +118,10 @@ export default function GamePage() {
                 </div>
 
                 <button
-                  style={styles.button}
-                  onClick={() => alert("Ten punkt uruchomimy w następnym kroku!")}
+                style={styles.button}
+                onClick={() => router.push(`/game/point/${point.id}`)}
                 >
-                  Rozpocznij punkt
+                Rozpocznij punkt
                 </button>
               </div>
             </div>
