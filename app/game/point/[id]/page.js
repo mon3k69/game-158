@@ -219,6 +219,18 @@ export default function PointPage() {
       return;
     }
 
+    const oldPhotoPath = existingSubmission?.photo_url;
+
+    if (photo && oldPhotoPath && oldPhotoPath !== photoPath) {
+      const { error: removeError } = await supabase.storage
+        .from("submissions")
+        .remove([oldPhotoPath]);
+
+      if (removeError) {
+        console.error(removeError);
+      }
+    }
+
     setSending(false);
     setMessage(
       isEditing ? "Odpowiedź została zaktualizowana! 🎉" : "Punkt został zaliczony! 🎉"
