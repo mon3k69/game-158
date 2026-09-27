@@ -187,7 +187,7 @@ export default function GameCenterPage() {
 
         {/* STATISTICS */}
 
-        <section style={styles.stats}>
+        <section className="gc-stats">
 
           <div style={styles.statCard}>
             <div style={styles.statNumber}>
@@ -262,10 +262,10 @@ export default function GameCenterPage() {
                 return (
                   <div
                     key={participant.id}
-                    style={styles.participant}
+                    className="gc-participant-row"
                   >
 
-                    <div style={styles.participantInfo}>
+                    <div className="gc-info" style={styles.participantInfo}>
 
                       <strong>
                         {participant.name}
@@ -277,7 +277,7 @@ export default function GameCenterPage() {
 
                     </div>
 
-                    <div style={styles.progressContainer}>
+                    <div className="gc-progress" style={styles.progressContainer}>
 
                       <div style={styles.progressText}>
                         {participant.completedCount} / {TOTAL_POINTS}
@@ -295,6 +295,7 @@ export default function GameCenterPage() {
                     </div>
 
                     <div
+                      className="gc-status"
                       style={{
                         ...styles.status,
                         ...(participant.status === "Ukończono"
@@ -307,12 +308,13 @@ export default function GameCenterPage() {
                       {participant.status}
                     </div>
 
-                    <div style={styles.activity}>
+                    <div className="gc-activity" style={styles.activity}>
                       {participant.latestActivity
                         ? formatDate(participant.latestActivity)
                         : "—"}
                     </div>
                     <button
+                    className="gc-button"
                     onClick={() =>
                         router.push(
                         `/game-center/participant/${participant.id}`
@@ -365,6 +367,7 @@ const styles = {
     borderRadius: "20px",
     marginBottom: "20px",
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "space-between",
     alignItems: "center",
     gap: "20px",
@@ -398,13 +401,6 @@ const styles = {
     cursor: "pointer",
     whiteSpace: "nowrap",
     fontWeight: "700",
-  },
-
-  stats: {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: "14px",
-    marginBottom: "20px",
   },
 
   statCard: {
@@ -452,15 +448,6 @@ const styles = {
   table: {
     display: "flex",
     flexDirection: "column",
-  },
-
-  participant: {
-    display: "grid",
-    gridTemplateColumns: "1.5fr 1fr 140px 140px 100px",
-    gap: "20px",
-    alignItems: "center",
-    padding: "16px 0",
-    borderBottom: "1px dashed var(--color-khaki-light)",
   },
 
   participantInfo: {

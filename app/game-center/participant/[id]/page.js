@@ -330,6 +330,7 @@ const styles = {
         borderRadius: "20px",
         marginBottom: "16px",
         display: "flex",
+        flexWrap: "wrap",
         justifyContent: "space-between",
         alignItems: "center",
         gap: "20px",
@@ -347,6 +348,7 @@ const styles = {
     title: {
         margin: 0,
         fontSize: "30px",
+        wordBreak: "break-word",
     },
 
     email: {

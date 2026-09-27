@@ -50,3 +50,64 @@ input,
 textarea {
   font-family: inherit;
 }
+
+.gc-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.gc-stats > * {
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .gc-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.gc-participant-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 140px 140px 100px;
+  gap: 20px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px dashed var(--color-khaki-light);
+}
+
+@media (max-width: 680px) {
+  .gc-participant-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "info info"
+      "progress status"
+      "activity button";
+    row-gap: 10px;
+    column-gap: 12px;
+    padding: 18px 0;
+  }
+
+  .gc-participant-row .gc-info {
+    grid-area: info;
+  }
+
+  .gc-participant-row .gc-progress {
+    grid-area: progress;
+  }
+
+  .gc-participant-row .gc-status {
+    grid-area: status;
+    justify-self: start;
+  }
+
+  .gc-participant-row .gc-activity {
+    grid-area: activity;
+  }
+
+  .gc-participant-row .gc-button {
+    grid-area: button;
+    justify-self: end;
+  }
+}
