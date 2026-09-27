@@ -11,6 +11,7 @@ export default function PointPage() {
   const [point, setPoint] = useState(null);
   const [patrol, setPatrol] = useState(null);
   const [answer, setAnswer] = useState("");
+  const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
@@ -73,22 +74,49 @@ export default function PointPage() {
       return;
     }
 
+    if (point.requires_photo && !photo) {
+      setMessage("Dodaj zdjęcie przed wysłaniem.");
+      return;
+    }
+
     setSending(true);
+
+    let photoPath = null;
+
+    if (photo) {
+      const fileExtension = photo.name.split(".").pop();
+      const fileName = `punkt-${point.id}-${Date.now()}.${fileExtension}`;
+      const filePath = `${patrol.id}/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("submissions")
+        .upload(filePath, photo);
+
+      if (uploadError) {
+        console.error(uploadError);
+        setMessage("Nie udało się wysłać zdjęcia.");
+        setSending(false);
+        return;
+      }
+
+      photoPath = filePath;
+    }
 
     const { error } = await supabase.from("submissions").insert({
       patrol_id: patrol.id,
       point_id: point.id,
       answer: answer.trim() || null,
+      photo_url: photoPath,
     });
-
-    setSending(false);
 
     if (error) {
       console.error(error);
-      setMessage("Nie udało się zapisać odpowiedzi.");
+      setMessage("Nie udało się zapisać wykonania punktu.");
+      setSending(false);
       return;
     }
 
+    setSending(false);
     setMessage("Punkt został zaliczony! 🎉");
 
     setTimeout(() => {
@@ -140,9 +168,7 @@ export default function PointPage() {
 
         {point.requires_answer && (
           <div>
-            <label style={styles.label}>
-              Twoja odpowiedź
-            </label>
+            <label style={styles.label}>Twoja odpowiedź</label>
 
             <textarea
               value={answer}
@@ -155,12 +181,22 @@ export default function PointPage() {
         )}
 
         {point.requires_photo && (
-          <div style={styles.photoBox}>
-            <div style={{ fontSize: "40px" }}>📷</div>
-            <strong>Tu dodamy zdjęcie</strong>
-            <p>
-              Formularz zdjęcia zrobimy w następnym kroku.
-            </p>
+          <div style={styles.photoSection}>
+            <label style={styles.label}>Twoje zdjęcie</label>
+
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={(e) => setPhoto(e.target.files?.[0] || null)}
+              style={styles.fileInput}
+            />
+
+            {photo && (
+              <p style={styles.photoSelected}>
+                Wybrano: {photo.name}
+              </p>
+            )}
           </div>
         )}
 
@@ -169,7 +205,7 @@ export default function PointPage() {
           disabled={sending}
           style={styles.submitButton}
         >
-          {sending ? "Zapisywanie..." : "Zalicz punkt ✅"}
+          {sending ? "Wysyłanie..." : "Zalicz punkt ✅"}
         </button>
 
         {message && (
@@ -248,13 +284,21 @@ const styles = {
     resize: "vertical",
   },
 
-  photoBox: {
-    marginTop: "20px",
-    padding: "25px",
-    textAlign: "center",
-    background: "#f9fafb",
-    border: "2px dashed #ccc",
-    borderRadius: "14px",
+  photoSection: {
+    marginTop: "22px",
+  },
+
+  fileInput: {
+    width: "100%",
+    padding: "12px",
+    border: "1px solid #ccc",
+    borderRadius: "10px",
+    boxSizing: "border-box",
+  },
+
+  photoSelected: {
+    marginTop: "10px",
+    color: "#555",
   },
 
   submitButton: {
