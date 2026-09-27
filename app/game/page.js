@@ -40,7 +40,7 @@ export default function GamePage() {
       const { data: pointsData, error: pointsError } = await supabase
         .from("points")
         .select(
-          "id, name, description, task, qr_code, sort_order, requires_photo, requires_answer"
+          "id, name, description, task, hint, qr_code, sort_order, requires_photo, requires_answer"
         )
         .order("sort_order", { ascending: true });
 
@@ -170,6 +170,12 @@ export default function GamePage() {
                     {point.requires_answer && (
                       <span style={styles.badge}>
                         ✏️ Odpowiedź
+                      </span>
+                    )}
+
+                    {point.hint && (
+                      <span style={styles.badge}>
+                        💡 Podpowiedź
                       </span>
                     )}
                   </div>

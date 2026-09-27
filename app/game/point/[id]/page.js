@@ -65,6 +65,10 @@ async function resizeImage(file, maxSize = 1600, quality = 0.8) {
   });
 }
 
+function isUrl(value) {
+  return /^https?:\/\//i.test(value.trim());
+}
+
 export default function PointPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -76,6 +80,7 @@ export default function PointPage() {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
+  const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
     async function loadPoint() {
@@ -104,7 +109,7 @@ export default function PointPage() {
       const { data: pointData, error: pointError } = await supabase
         .from("points")
         .select(
-          "id, name, description, task, requires_photo, requires_answer"
+          "id, name, description, task, hint, requires_photo, requires_answer"
         )
         .eq("id", id)
         .eq("active", true)
@@ -226,6 +231,31 @@ export default function PointPage() {
           <strong>Twoje zadanie:</strong>
           <p>{point.task}</p>
         </div>
+
+        {point.hint && (
+          <div style={styles.hintBox}>
+            {!showHint ? (
+              <button
+                type="button"
+                onClick={() => setShowHint(true)}
+                style={styles.hintButton}
+              >
+                💡 Pokaż podpowiedź
+              </button>
+            ) : isUrl(point.hint) ? (
+              <a
+                href={point.hint}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.hintLink}
+              >
+                💡 Otwórz podpowiedź →
+              </a>
+            ) : (
+              <p style={styles.hintText}>💡 {point.hint}</p>
+            )}
+          </div>
+        )}
 
         {point.requires_answer && (
           <div>
@@ -417,7 +447,44 @@ const styles = {
     borderRadius: "10px",
     textAlign: "center",
   },
-  
+
+  hintBox: {
+    marginTop: "16px",
+  },
+
+  hintButton: {
+    border: "1px dashed var(--color-orange)",
+    background: "var(--color-orange-light)",
+    color: "var(--color-orange-dark)",
+    padding: "10px 16px",
+    borderRadius: "10px",
+    fontSize: "14px",
+    fontWeight: "700",
+    cursor: "pointer",
+  },
+
+  hintLink: {
+    display: "inline-block",
+    border: "1px solid var(--color-orange)",
+    background: "var(--color-orange-light)",
+    color: "var(--color-orange-dark)",
+    padding: "10px 16px",
+    borderRadius: "10px",
+    fontSize: "14px",
+    fontWeight: "700",
+    textDecoration: "none",
+  },
+
+  hintText: {
+    border: "1px dashed var(--color-orange)",
+    background: "var(--color-orange-light)",
+    color: "var(--color-orange-dark)",
+    padding: "10px 16px",
+    borderRadius: "10px",
+    fontSize: "14px",
+    margin: 0,
+  },
+
    answerButtons: {
     display: "flex",
     gap: "12px",
