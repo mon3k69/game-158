@@ -1,70 +1,57 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { supabase } from "../lib/supabase";
-
-export default function GamePage() {
-  const router = useRouter();
-  const [patrol, setPatrol] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadPatrol() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        router.push("/login");
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("patrols")
-        .select("id, name, email")
-        .eq("user_id", user.id)
-        .single();
-
-      if (error) {
-        console.error(error);
-        setLoading(false);
-        return;
-      }
-
-      setPatrol(data);
-      setLoading(false);
-    }
-
-    loadPatrol();
-  }, [router]);
-
-  if (loading) {
-    return <main style={{ padding: "30px" }}>Ładowanie...</main>;
-  }
-
-  if (!patrol) {
-    return (
-      <main style={{ padding: "30px" }}>
-        Nie znaleziono danych patrolu.
-      </main>
-    );
-  }
-
+export default function Home() {
   return (
-    <main style={{ padding: "30px" }}>
-      <h1>Witaj, {patrol.name}! 👋</h1>
+    <main
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "24px",
+        background: "#f5f5f5",
+      }}
+    >
+      <div
+        style={{
+          background: "white",
+          padding: "40px",
+          borderRadius: "16px",
+          textAlign: "center",
+          maxWidth: "500px",
+        }}
+      >
+        <h1>Gra ZHP 🏕️</h1>
 
-      <p>Jesteś zalogowany jako:</p>
+        <p>
+          Gra terenowa dla patroli.
+        </p>
 
-      <strong>{patrol.email}</strong>
+        <a
+          href="/login"
+          style={{
+            display: "inline-block",
+            marginTop: "20px",
+            padding: "12px 20px",
+            borderRadius: "8px",
+            background: "#111",
+            color: "white",
+            textDecoration: "none",
+          }}
+        >
+          Zaloguj się
+        </a>
 
-      <hr style={{ margin: "30px 0" }} />
+        <br />
 
-      <h2>Gra terenowa</h2>
-      <p>
-        Tutaj za chwilę pojawi się mapa, punkty i zadania.
-      </p>
+        <a
+          href="/register"
+          style={{
+            display: "inline-block",
+            marginTop: "12px",
+          }}
+        >
+          Zarejestruj patrol
+        </a>
+      </div>
     </main>
   );
 }
