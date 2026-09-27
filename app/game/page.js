@@ -180,20 +180,20 @@ export default function GamePage() {
                     )}
                   </div>
 
-                  {completed ? (
+                  {completed && (
                     <div style={styles.completedText}>
                       ✅ Punkt wykonany
                     </div>
-                  ) : (
-                    <button
-                      style={styles.button}
-                      onClick={() =>
-                        router.push(`/game/point/${point.id}`)
-                      }
-                    >
-                      Rozpocznij punkt
-                    </button>
                   )}
+
+                  <button
+                    style={completed ? styles.buttonSecondary : styles.button}
+                    onClick={() =>
+                      router.push(`/game/point/${point.id}`)
+                    }
+                  >
+                    {completed ? "Zobacz / zmień odpowiedź" : "Rozpocznij punkt"}
+                  </button>
                 </div>
               </div>
             );
@@ -359,6 +359,19 @@ const styles = {
     borderRadius: "10px",
     background: "var(--color-orange)",
     color: "white",
+    fontSize: "15px",
+    fontWeight: "700",
+    cursor: "pointer",
+  },
+
+  buttonSecondary: {
+    width: "100%",
+    marginTop: "10px",
+    padding: "12px",
+    border: "1px solid var(--color-khaki)",
+    borderRadius: "10px",
+    background: "var(--color-paper)",
+    color: "var(--color-forest-dark)",
     fontSize: "15px",
     fontWeight: "700",
     cursor: "pointer",

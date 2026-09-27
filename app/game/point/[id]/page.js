@@ -81,6 +81,8 @@ export default function PointPage() {
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
   const [showHint, setShowHint] = useState(false);
+  const [existingSubmission, setExistingSubmission] = useState(null);
+  const [existingPhotoUrl, setExistingPhotoUrl] = useState(null);
 
   useEffect(() => {
     async function loadPoint() {
@@ -122,6 +124,30 @@ export default function PointPage() {
         return;
       }
 
+      const { data: submissionData, error: submissionError } = await supabase
+        .from("submissions")
+        .select("id, answer, photo_url")
+        .eq("patrol_id", patrolData.id)
+        .eq("point_id", id)
+        .maybeSingle();
+
+      if (submissionError) {
+        console.error(submissionError);
+      }
+
+      if (submissionData) {
+        setExistingSubmission(submissionData);
+        setAnswer(submissionData.answer || "");
+
+        if (submissionData.photo_url) {
+          const { data: signedData } = await supabase.storage
+            .from("submissions")
+            .createSignedUrl(submissionData.photo_url, 60 * 60);
+
+          setExistingPhotoUrl(signedData?.signedUrl || null);
+        }
+      }
+
       setPatrol(patrolData);
       setPoint(pointData);
       setLoading(false);
@@ -135,19 +161,23 @@ export default function PointPage() {
   async function submitPoint() {
     setMessage("");
 
+    const isEditing = Boolean(existingSubmission);
+
     if (point.requires_answer && !answer.trim()) {
       setMessage("Wpisz odpowiedź przed wysłaniem.");
       return;
     }
 
-    if (point.requires_photo && !photo) {
+    const hasExistingPhoto = Boolean(existingSubmission?.photo_url);
+
+    if (point.requires_photo && !photo && !hasExistingPhoto) {
       setMessage("Dodaj zdjęcie przed wysłaniem.");
       return;
     }
 
     setSending(true);
 
-    let photoPath = null;
+    let photoPath = existingSubmission?.photo_url || null;
 
     if (photo) {
       const fileName = `punkt-${point.id}-${Date.now()}.jpg`;
@@ -168,12 +198,19 @@ export default function PointPage() {
       photoPath = filePath;
     }
 
-    const { error } = await supabase.from("submissions").insert({
+    const payload = {
       patrol_id: patrol.id,
       point_id: point.id,
       answer: answer.trim() || null,
       photo_url: photoPath,
-    });
+    };
+
+    const { error } = isEditing
+      ? await supabase
+          .from("submissions")
+          .update(payload)
+          .eq("id", existingSubmission.id)
+      : await supabase.from("submissions").insert(payload);
 
     if (error) {
       console.error(error);
@@ -183,7 +220,9 @@ export default function PointPage() {
     }
 
     setSending(false);
-    setMessage("Punkt został zaliczony! 🎉");
+    setMessage(
+      isEditing ? "Odpowiedź została zaktualizowana! 🎉" : "Punkt został zaliczony! 🎉"
+    );
 
     setTimeout(() => {
       router.push("/game");
@@ -226,6 +265,12 @@ export default function PointPage() {
         <h1>{point.name}</h1>
 
         <p style={styles.description}>{point.description}</p>
+
+        {existingSubmission && (
+          <div style={styles.completedBanner}>
+            ✅ Ten punkt jest już wykonany. Możesz zmienić odpowiedź poniżej.
+          </div>
+        )}
 
         <div style={styles.task}>
           <strong>Twoje zadanie:</strong>
@@ -301,6 +346,19 @@ export default function PointPage() {
           <div style={styles.photoSection}>
             <label style={styles.label}>Twoje zdjęcie</label>
 
+            {existingPhotoUrl && !photo && (
+              <div style={styles.existingPhotoBox}>
+                <img
+                  src={existingPhotoUrl}
+                  alt="Wysłane zdjęcie"
+                  style={styles.existingPhoto}
+                />
+                <p style={styles.photoSelected}>
+                  To zdjęcie już wysłałeś. Wybierz nowe, żeby je podmienić.
+                </p>
+              </div>
+            )}
+
             <input
               type="file"
               accept="image/*"
@@ -321,7 +379,11 @@ export default function PointPage() {
           disabled={sending}
           style={styles.submitButton}
         >
-          {sending ? "Wysyłanie..." : "Zalicz punkt ✅"}
+          {sending
+            ? "Wysyłanie..."
+            : existingSubmission
+            ? "Zapisz zmiany 💾"
+            : "Zalicz punkt ✅"}
         </button>
 
         {message && (
@@ -386,6 +448,28 @@ const styles = {
     margin: "24px 0",
     lineHeight: 1.5,
     color: "var(--color-text)",
+  },
+
+  completedBanner: {
+    marginTop: "16px",
+    padding: "12px 16px",
+    background: "var(--color-khaki-light)",
+    color: "var(--color-forest-dark)",
+    borderRadius: "10px",
+    fontWeight: "600",
+  },
+
+  existingPhotoBox: {
+    marginBottom: "12px",
+  },
+
+  existingPhoto: {
+    display: "block",
+    width: "100%",
+    maxWidth: "300px",
+    borderRadius: "12px",
+    border: "1px solid var(--color-khaki-light)",
+    marginBottom: "8px",
   },
 
   label: {
