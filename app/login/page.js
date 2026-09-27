@@ -1,22 +1,43 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "../../lib/supabase";
 
 export default function LoginPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log({
-      name,
-      email,
-      code,
-    });
+    setLoading(true);
+    setMessage("");
 
-    alert("Dane zostały wysłane!");
+    const { data, error } = await supabase
+      .from("patrols")
+      .select("id, name, email")
+      .eq("name", name)
+      .eq("email", email)
+      .eq("code", code)
+      .maybeSingle();
+
+    setLoading(false);
+
+    if (error) {
+      setMessage("Wystąpił błąd. Spróbuj ponownie.");
+      console.error(error);
+      return;
+    }
+
+    if (!data) {
+      setMessage("Nieprawidłowa nazwa patrolu, e-mail lub kod.");
+      return;
+    }
+
+    setMessage(`Witaj, ${data.name}! Logowanie udane.`);
   }
 
   return (
@@ -42,6 +63,7 @@ export default function LoginPage() {
         }}
       >
         <h1>Gra ZHP</h1>
+
         <p>Wprowadź dane patrolu, aby rozpocząć grę.</p>
 
         <label>Nazwa patrolu</label>
@@ -76,6 +98,7 @@ export default function LoginPage() {
 
         <button
           type="submit"
+          disabled={loading}
           style={{
             width: "100%",
             padding: "14px",
@@ -88,8 +111,21 @@ export default function LoginPage() {
             cursor: "pointer",
           }}
         >
-          Wejdź do gry
+          {loading ? "Sprawdzanie..." : "Wejdź do gry"}
         </button>
+
+        {message && (
+          <p
+            style={{
+              marginTop: "20px",
+              padding: "12px",
+              background: "#f0f0f0",
+              borderRadius: "8px",
+            }}
+          >
+            {message}
+          </p>
+        )}
       </form>
     </main>
   );
