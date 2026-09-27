@@ -160,15 +160,15 @@ export default function ParticipantDetailsPage() {
                     onClick={() => router.push("/game-center")}
                     style={styles.backButton}
                 >
-                    ← Game Center
+                    ← Panel gry
                 </button>
 
-                {/* PARTICIPANT HEADER */}
+                {/* NAGŁÓWEK UCZESTNIKA */}
 
                 <section style={styles.header}>
                     <div>
                         <div style={styles.label}>
-                            PARTICIPANT
+                            UCZESTNIK
                         </div>
 
                         <h1 style={styles.title}>
@@ -186,16 +186,16 @@ export default function ParticipantDetailsPage() {
                         </strong>
 
                         <span>
-                            completed
+                            ukończone
                         </span>
                     </div>
                 </section>
 
-                {/* PROGRESS BAR */}
+                {/* PASEK POSTĘPU */}
 
                 <section style={styles.card}>
                     <div style={styles.progressHeader}>
-                        <strong>Progress</strong>
+                        <strong>Postęp</strong>
                         <span>{progress}%</span>
                     </div>
 
@@ -209,10 +209,10 @@ export default function ParticipantDetailsPage() {
                     </div>
                 </section>
 
-                {/* POINTS */}
+                {/* PUNKTY */}
 
                 <section style={styles.card}>
-                    <h2>Points</h2>
+                    <h2>Punkty</h2>
 
                     <div style={styles.points}>
                         {points.map((point, index) => {
@@ -254,8 +254,8 @@ export default function ParticipantDetailsPage() {
                                             }
                                         >
                                             {completed
-                                                ? "Completed"
-                                                : "Not completed"}
+                                                ? "Ukończono"
+                                                : "Nieukończono"}
                                         </span>
                                     </div>
 
@@ -265,7 +265,7 @@ export default function ParticipantDetailsPage() {
                                             {submission.answer && (
                                                 <div style={styles.answer}>
                                                     <strong>
-                                                        Answer
+                                                        Odpowiedź
                                                     </strong>
 
                                                     <p>
@@ -279,7 +279,7 @@ export default function ParticipantDetailsPage() {
                                             )}
 
                                             <div style={styles.date}>
-                                                Submitted:{" "}
+                                                Wysłano:{" "}
                                                 {new Date(
                                                     submission.submitted_at
                                                 ).toLocaleString("pl-PL")}

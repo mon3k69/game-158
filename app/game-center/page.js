@@ -94,14 +94,14 @@ export default function GameCenterPage() {
         .sort()
         .reverse()[0];
 
-      let status = "Not started";
+      let status = "Nie rozpoczęto";
 
       if (completedCount > 0 && completedCount < TOTAL_POINTS) {
-        status = "In progress";
+        status = "W trakcie";
       }
 
       if (completedCount >= TOTAL_POINTS) {
-        status = "Completed";
+        status = "Ukończono";
       }
 
       return {
@@ -120,7 +120,7 @@ export default function GameCenterPage() {
     return (
       <main style={styles.page}>
         <div style={styles.loading}>
-          Loading Game Center...
+          Ładowanie panelu organizatora...
         </div>
       </main>
     );
@@ -147,15 +147,15 @@ export default function GameCenterPage() {
   const totalParticipants = participants.length;
 
   const completedParticipants = participants.filter(
-    (participant) => participant.status === "Completed"
+    (participant) => participant.status === "Ukończono"
   ).length;
 
   const inProgressParticipants = participants.filter(
-    (participant) => participant.status === "In progress"
+    (participant) => participant.status === "W trakcie"
   ).length;
 
   const notStartedParticipants = participants.filter(
-    (participant) => participant.status === "Not started"
+    (participant) => participant.status === "Nie rozpoczęto"
   ).length;
 
   return (
@@ -166,7 +166,7 @@ export default function GameCenterPage() {
 
         <header style={styles.header}>
           <div>
-            <div style={styles.label}>GAME CENTER</div>
+            <div style={styles.label}>⚜️ PANEL GRY</div>
 
             <h1 style={styles.title}>
               Panel organizatora 🎯
@@ -297,9 +297,9 @@ export default function GameCenterPage() {
                     <div
                       style={{
                         ...styles.status,
-                        ...(participant.status === "Completed"
+                        ...(participant.status === "Ukończono"
                           ? styles.statusCompleted
-                          : participant.status === "In progress"
+                          : participant.status === "W trakcie"
                           ? styles.statusProgress
                           : styles.statusNotStarted),
                       }}
