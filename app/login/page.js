@@ -57,14 +57,14 @@ export default function LoginPage() {
       >
         <h1>Gra ZHP</h1>
 
-        <p>Zaloguj się do swojego patrolu.</p>
+        <p>Zaloguj się i kontynuuj grę.</p>
 
         <label>Adres e-mail</label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="patrol@example.com"
+          placeholder="twoj@email.com"
           required
           style={inputStyle}
         />
@@ -112,7 +112,7 @@ export default function LoginPage() {
 
         <p style={{ marginTop: "24px" }}>
           Nie masz konta?{" "}
-          <a href="/register">Zarejestruj patrol</a>
+          <a href="/register">Zarejestruj się</a>
         </p>
       </form>
     </main>

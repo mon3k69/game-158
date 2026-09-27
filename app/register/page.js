@@ -74,14 +74,14 @@ export default function RegisterPage() {
       >
         <h1>Dołącz do gry</h1>
 
-        <p>Utwórz konto swojego patrolu.</p>
+        <p>Podaj pseudonim i utwórz swoje konto.</p>
 
-        <label>Nazwa patrolu</label>
+        <label>Twój pseudonim</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="np. Czerwone Wilki"
+          placeholder="np. Błyskawica"
           required
           style={inputStyle}
         />
@@ -91,7 +91,7 @@ export default function RegisterPage() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="patrol@example.com"
+          placeholder="twoj@email.com"
           required
           style={inputStyle}
         />
@@ -131,7 +131,7 @@ export default function RegisterPage() {
             cursor: "pointer",
           }}
         >
-          {loading ? "Tworzenie konta..." : "Zarejestruj patrol"}
+          {loading ? "Tworzenie konta..." : "Zarejestruj się"}
         </button>
 
         {message && (

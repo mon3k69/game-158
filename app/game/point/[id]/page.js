@@ -4,6 +4,67 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "../../../../lib/supabase";
 
+async function resizeImage(file, maxSize = 1600, quality = 0.8) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxSize || height > maxSize) {
+        const scale = Math.min(
+          maxSize / width,
+          maxSize / height
+        );
+
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(
+              new Error("Nie udało się zmniejszyć zdjęcia.")
+            );
+            return;
+          }
+
+          resolve(
+            new File(
+              [blob],
+              "photo.jpg",
+              { type: "image/jpeg" }
+            )
+          );
+        },
+        "image/jpeg",
+        quality
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(
+        new Error("Nie udało się odczytać zdjęcia.")
+      );
+    };
+
+    img.src = objectUrl;
+  });
+}
+
 export default function PointPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -35,7 +96,7 @@ export default function PointPage() {
 
       if (patrolError) {
         console.error(patrolError);
-        setMessage("Nie udało się pobrać danych patrolu.");
+        setMessage("Nie udało się pobrać danych gracza.");
         setLoading(false);
         return;
       }
@@ -84,13 +145,13 @@ export default function PointPage() {
     let photoPath = null;
 
     if (photo) {
-      const fileExtension = photo.name.split(".").pop();
-      const fileName = `punkt-${point.id}-${Date.now()}.${fileExtension}`;
+      const fileName = `punkt-${point.id}-${Date.now()}.jpg`;
       const filePath = `${patrol.id}/${fileName}`;
+      const resizedFile = await resizeImage(photo);
 
       const { error: uploadError } = await supabase.storage
         .from("submissions")
-        .upload(filePath, photo);
+        .upload(filePath, resizedFile);
 
       if (uploadError) {
         console.error(uploadError);

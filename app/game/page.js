@@ -32,7 +32,7 @@ export default function GamePage() {
 
       if (patrolError) {
         console.error(patrolError);
-        setError("Nie udało się pobrać danych patrolu.");
+        setError("Nie udało się pobrać danych gracza.");
         setLoading(false);
         return;
       }
@@ -100,7 +100,7 @@ export default function GamePage() {
     <main style={styles.page}>
       <div style={styles.container}>
         <header style={styles.header}>
-          <p style={styles.small}>TWÓJ PATROL</p>
+          <p style={styles.small}>TWÓJ PSEUDONIM</p>
 
           <h1 style={styles.title}>
             {patrol.name} 🏕️
@@ -196,7 +196,7 @@ export default function GamePage() {
 
         {completedCount === totalCount && totalCount > 0 && (
           <div style={styles.finish}>
-            🎉 Gratulacje! Wykonaliście wszystkie zadania!
+            🎉 Gratulacje! Wszystkie zadania wykonane!
           </div>
         )}
       </div>
