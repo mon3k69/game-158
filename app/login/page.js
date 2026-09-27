@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
 export default function LoginPage() {
-  const [name, setName] = useState("");
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -16,28 +18,19 @@ export default function LoginPage() {
     setLoading(true);
     setMessage("");
 
-    const { data, error } = await supabase
-      .from("patrols")
-      .select("id, name, email")
-      .eq("name", name)
-      .eq("email", email)
-      .eq("code", code)
-      .maybeSingle();
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     setLoading(false);
 
     if (error) {
-      setMessage("Wystąpił błąd. Spróbuj ponownie.");
-      console.error(error);
+      setMessage("Nieprawidłowy e-mail lub hasło.");
       return;
     }
 
-    if (!data) {
-      setMessage("Nieprawidłowa nazwa patrolu, e-mail lub kod.");
-      return;
-    }
-
-    setMessage(`Witaj, ${data.name}! Logowanie udane.`);
+    router.push("/game");
   }
 
   return (
@@ -64,17 +57,7 @@ export default function LoginPage() {
       >
         <h1>Gra ZHP</h1>
 
-        <p>Wprowadź dane patrolu, aby rozpocząć grę.</p>
-
-        <label>Nazwa patrolu</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="np. Czerwone Wilki"
-          required
-          style={inputStyle}
-        />
+        <p>Zaloguj się do swojego patrolu.</p>
 
         <label>Adres e-mail</label>
         <input
@@ -86,12 +69,12 @@ export default function LoginPage() {
           style={inputStyle}
         />
 
-        <label>Kod patrolu</label>
+        <label>Hasło</label>
         <input
-          type="text"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="np. 1234"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Twoje hasło"
           required
           style={inputStyle}
         />
@@ -102,7 +85,7 @@ export default function LoginPage() {
           style={{
             width: "100%",
             padding: "14px",
-            marginTop: "20px",
+            marginTop: "8px",
             border: "none",
             borderRadius: "10px",
             background: "#111",
@@ -111,7 +94,7 @@ export default function LoginPage() {
             cursor: "pointer",
           }}
         >
-          {loading ? "Sprawdzanie..." : "Wejdź do gry"}
+          {loading ? "Logowanie..." : "Zaloguj się"}
         </button>
 
         {message && (
@@ -126,6 +109,11 @@ export default function LoginPage() {
             {message}
           </p>
         )}
+
+        <p style={{ marginTop: "24px" }}>
+          Nie masz konta?{" "}
+          <a href="/register">Zarejestruj patrol</a>
+        </p>
       </form>
     </main>
   );
