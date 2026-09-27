@@ -312,7 +312,16 @@ export default function GameCenterPage() {
                         ? formatDate(participant.latestActivity)
                         : "—"}
                     </div>
-
+                    <button
+                    onClick={() =>
+                        router.push(
+                        `/game-center/participant/${participant.id}`
+                        )
+                    }
+                    style={styles.detailsButton}
+                    >
+                    Szczegóły
+                    </button>
                   </div>
                 );
               })}
@@ -439,7 +448,7 @@ const styles = {
 
   participant: {
     display: "grid",
-    gridTemplateColumns: "1.5fr 1fr 140px 140px",
+    gridTemplateColumns: "1.5fr 1fr 140px 140px 100px",
     gap: "20px",
     alignItems: "center",
     padding: "16px 0",
@@ -528,5 +537,14 @@ const styles = {
     background: "#111827",
     color: "white",
     cursor: "pointer",
+  },
+    detailsButton: {
+    border: "none",
+    background: "#111827",
+    color: "white",
+    padding: "8px 12px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "12px",
   },
 };
