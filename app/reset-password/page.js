@@ -1,16 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
-export default function LoginPage() {
-  const router = useRouter();
-
+export default function ResetPasswordPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -18,67 +15,69 @@ export default function LoginPage() {
     setLoading(true);
     setMessage("");
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/update-password`,
     });
 
     setLoading(false);
 
     if (error) {
-      setMessage("Nieprawidłowy e-mail lub hasło.");
+      setMessage("Nie udało się wysłać linku. Spróbuj ponownie.");
       return;
     }
 
-    router.push("/game");
+    setSent(true);
   }
 
   return (
     <main style={styles.page}>
       <form onSubmit={handleSubmit} style={styles.card}>
         <p style={styles.eyebrow}>⚜️ GRA ZHP</p>
-        <h1 style={styles.title}>Gra ZHP</h1>
+        <h1 style={styles.title}>Resetuj hasło</h1>
 
-        <p style={styles.subtitle}>Zaloguj się i kontynuuj grę.</p>
+        {sent ? (
+          <>
+            <p style={styles.subtitle}>
+              Jeśli konto o podanym adresie istnieje, wysłaliśmy na nie
+              link do zresetowania hasła. Sprawdź swoją skrzynkę e-mail.
+            </p>
 
-        <label style={styles.label}>Adres e-mail</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="twoj@email.com"
-          required
-          style={inputStyle}
-        />
+            <p style={styles.footerText}>
+              <a href="/login" style={styles.link}>
+                Wróć do logowania
+              </a>
+            </p>
+          </>
+        ) : (
+          <>
+            <p style={styles.subtitle}>
+              Podaj adres e-mail, na który wyślemy link do ustawienia
+              nowego hasła.
+            </p>
 
-        <label style={styles.label}>Hasło</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Twoje hasło"
-          required
-          style={inputStyle}
-        />
+            <label style={styles.label}>Adres e-mail</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="twoj@email.com"
+              required
+              style={inputStyle}
+            />
 
-        <button type="submit" disabled={loading} style={styles.button}>
-          {loading ? "Logowanie..." : "Zaloguj się"}
-        </button>
+            <button type="submit" disabled={loading} style={styles.button}>
+              {loading ? "Wysyłanie..." : "Wyślij link resetujący"}
+            </button>
 
-        {message && <p style={styles.message}>{message}</p>}
+            {message && <p style={styles.message}>{message}</p>}
 
-        <p style={styles.footerText}>
-          <a href="/reset-password" style={styles.link}>
-            Zapomniałeś hasła?
-          </a>
-        </p>
-
-        <p style={styles.footerText}>
-          Nie masz konta?{" "}
-          <a href="/register" style={styles.link}>
-            Zarejestruj się
-          </a>
-        </p>
+            <p style={styles.footerText}>
+              <a href="/login" style={styles.link}>
+                Wróć do logowania
+              </a>
+            </p>
+          </>
+        )}
       </form>
     </main>
   );
@@ -119,6 +118,7 @@ const styles = {
   subtitle: {
     color: "var(--color-text-muted)",
     marginTop: "8px",
+    lineHeight: 1.5,
   },
 
   label: {
