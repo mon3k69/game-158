@@ -231,13 +231,39 @@ export default function PointPage() {
           <div>
             <label style={styles.label}>Twoja odpowiedź</label>
 
-            <textarea
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              placeholder="Wpisz tutaj odpowiedź..."
-              rows={5}
-              style={styles.textarea}
-            />
+            {point.id === 6 ? (
+              <div style={styles.answerButtons}>
+                <button
+                  type="button"
+                  onClick={() => setAnswer("Tak")}
+                  style={{
+                    ...styles.answerButton,
+                    ...(answer === "Tak" ? styles.answerButtonSelected : {}),
+                  }}
+                >
+                  Tak
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setAnswer("Nie")}
+                  style={{
+                    ...styles.answerButton,
+                    ...(answer === "Nie" ? styles.answerButtonSelected : {}),
+                  }}
+                >
+                  Nie
+                </button>
+              </div>
+            ) : (
+              <textarea
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                placeholder="Wpisz tutaj odpowiedź..."
+                rows={5}
+                style={styles.textarea}
+              />
+            )}
           </div>
         )}
 
