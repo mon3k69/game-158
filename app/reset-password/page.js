@@ -42,6 +42,11 @@ export default function ResetPasswordPage() {
               link do zresetowania hasła. Sprawdź swoją skrzynkę e-mail.
             </p>
 
+            <div style={styles.spamNotice}>
+              📬 <strong>Nie widzisz maila?</strong> Sprawdź folder{" "}
+              <strong>SPAM / Oferty</strong> — czasem wiadomość tam trafia.
+            </div>
+
             <p style={styles.footerText}>
               <a href="/login" style={styles.link}>
                 Wróć do logowania
@@ -150,6 +155,17 @@ const styles = {
     background: "var(--color-khaki-light)",
     color: "var(--color-forest-dark)",
     borderRadius: "10px",
+  },
+
+  spamNotice: {
+    marginTop: "16px",
+    padding: "14px 16px",
+    background: "var(--color-orange-light)",
+    border: "1px dashed var(--color-orange)",
+    color: "var(--color-orange-dark)",
+    borderRadius: "10px",
+    fontSize: "14px",
+    lineHeight: 1.5,
   },
 
   footerText: {

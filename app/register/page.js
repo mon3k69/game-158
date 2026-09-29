@@ -10,6 +10,7 @@ export default function RegisterPage() {
   const [password2, setPassword2] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [registered, setRegistered] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -48,6 +49,7 @@ export default function RegisterPage() {
     setMessage(
       "Konto zostało utworzone. Sprawdź swoją skrzynkę e-mail i potwierdź adres."
     );
+    setRegistered(true);
   }
 
   return (
@@ -103,6 +105,13 @@ export default function RegisterPage() {
         </button>
 
         {message && <p style={styles.message}>{message}</p>}
+
+        {registered && (
+          <div style={styles.spamNotice}>
+            📬 <strong>Nie widzisz maila?</strong> Sprawdź folder{" "}
+            <strong>SPAM / Oferty</strong> — czasem wiadomość tam trafia.
+          </div>
+        )}
       </form>
     </main>
   );
@@ -174,6 +183,17 @@ const styles = {
     background: "var(--color-khaki-light)",
     color: "var(--color-forest-dark)",
     borderRadius: "10px",
+  },
+
+  spamNotice: {
+    marginTop: "12px",
+    padding: "14px 16px",
+    background: "var(--color-orange-light)",
+    border: "1px dashed var(--color-orange)",
+    color: "var(--color-orange-dark)",
+    borderRadius: "10px",
+    fontSize: "14px",
+    lineHeight: 1.5,
   },
 };
 
